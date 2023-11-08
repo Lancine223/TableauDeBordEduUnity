@@ -4,6 +4,6 @@
     align-items: center;
     margin: 15px;
 }
-/* .active a{
-    background-color: aquamarine;
-} */
+.active :first-child{
+    background-color: #725787;
+}

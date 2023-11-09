@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Admin } from 'app/model/admin';
+import { AuthentificationService } from 'app/service/authentification.service';
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
-  constructor() { }
+adminConnecter: Admin|undefined ;
+  constructor(private authService: AuthentificationService) {
+    this.adminConnecter = authService.getAdminConnect();
+   }
 
   ngOnInit(): void {
+
   }
 
 }

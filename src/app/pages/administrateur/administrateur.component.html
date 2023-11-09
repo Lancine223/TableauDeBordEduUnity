@@ -1,9 +1,20 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+
+
+            <div *ngIf="adminConnecter.role !== 'superadmin'" class="col-md-12">
+               <div class="card">
+                <img src="../../../assets/img/admisimple.jpg">
+               </div>
+
+            </div>
+
+
+            <div *ngIf="adminConnecter.role === 'superadmin'" class="col-md-12">
+                <a style="background: #725787;" href="javascript:void(0)" class="btn btn-round"><i class="fas fa-plus" style="color: white;"></i> Ajouter</a>
                 <div class="card">
-                    <div class="card-header card-header-danger">
+                    <div class="card-header card-header" style="background-color: #8F8B8B !important;">
                         <h4 class="card-title">Liste des administrateurs </h4>
                         <p class="card-category">Gerer vos admins</p>
                     </div>
@@ -37,7 +48,7 @@
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                         <td mat-cell *matCellDef="let row">
-                        <mat-icon (click)="onDelete(row.idAdministrateur)" >delete</mat-icon>
+                        <i class="fas fa-trash" style="color: red;"  (click)="onDelete(row.idAdministrateur)" ></i>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -50,7 +61,7 @@
                     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of admins"></mat-paginator>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="card card-profile">
                     <div class="card-avatar">
                         <a href="javascript:void(0)">
@@ -66,7 +77,7 @@
                         <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
   </div>

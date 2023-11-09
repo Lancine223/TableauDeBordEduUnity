@@ -25,6 +25,8 @@ import { NiveauComponent } from './pages/niveau/niveau.component';
 import { MatDialogModule} from '@angular/material/dialog';
 import { AdministrateurComponent } from './pages/administrateur/administrateur.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DetailNiveauComponent } from './pages/detail-niveau/detail-niveau.component';
+import { DetailFiliereComponent } from './pages/detail-filiere/detail-filiere.component';
 
 @NgModule({
   imports: [
@@ -58,6 +60,8 @@ import { HttpClientModule } from '@angular/common/http';
     AjoutModifierClasseComponent,
     NiveauComponent,
     AdministrateurComponent,
+    DetailNiveauComponent,
+    DetailFiliereComponent,
 
   ],
   providers: [],

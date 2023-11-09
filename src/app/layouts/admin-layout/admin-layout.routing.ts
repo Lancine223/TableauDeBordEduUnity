@@ -7,6 +7,8 @@ import { EtudiantComponent } from 'app/pages/etudiant/etudiant.component';
 import { AlertEnseignantComponent } from 'app/pages/alert-enseignant/alert-enseignant.component';
 import { ConnexionComponent } from 'app/pages/connexion/connexion.component';
 import { AdministrateurComponent } from 'app/pages/administrateur/administrateur.component';
+import { DetailNiveauComponent } from 'app/pages/detail-niveau/detail-niveau.component';
+import { DetailFiliereComponent } from 'app/pages/detail-filiere/detail-filiere.component';
 // import { ConnexionComponent } from 'app/pages/connexion/connexion.component';
 
 export const AdminLayoutRoutes: Routes = [
@@ -18,4 +20,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'etudiant',     component: EtudiantComponent },
     { path: 'admin',     component: AdministrateurComponent },
     { path: 'alert-en',          component: AlertEnseignantComponent },
+    { path: 'detail-niveau',          component: DetailNiveauComponent },
+    { path: 'detail-filiere',          component: DetailFiliereComponent },
+    
 ];

@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Admin } from 'app/model/admin';
 import { AdministrateurService } from 'app/service/administrateur.service';
+import { AuthentificationService } from 'app/service/authentification.service';
 
 @Component({
   selector: 'app-administrateur',
@@ -13,12 +14,15 @@ import { AdministrateurService } from 'app/service/administrateur.service';
 export class AdministrateurComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nom', 'prenom', 'email', 'action'];  
   admins: Admin[]|any = [];
+
+  adminConnecter: Admin|undefined ;
  
   listeData:any = [];
   dataSource!: MatTableDataSource<Admin>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor( private adminService: AdministrateurService) {
+  constructor( private adminService: AdministrateurService, private authService: AuthentificationService) {
+    this.adminConnecter = this.authService.getAdminConnect();
     this.dataSource = new MatTableDataSource(this.admins);
    }
 

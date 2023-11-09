@@ -14,10 +14,9 @@ export class TableauDeBordComponent implements OnInit {
   constructor(private adminService: AdministrateurService, private authService: AuthentificationService,
     ) { 
       this.AdminConnecter = this.authService.getAdminConnect();
-      console.log("Admin Connecter est :", this.AdminConnecter);
+      // console.log("Admin Connecter est :", this.AdminConnecter);
     }
-  
-   
+    
   ngOnInit() {
     
   }

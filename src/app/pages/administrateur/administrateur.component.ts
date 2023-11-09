@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Admin } from 'app/model/admin';
 import { AdministrateurService } from 'app/service/administrateur.service';
 import { AuthentificationService } from 'app/service/authentification.service';
+import { AjoutModifierAdminComponent } from '../ajout-modifier-admin/ajout-modifier-admin.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-administrateur',
@@ -21,7 +23,7 @@ export class AdministrateurComponent implements OnInit {
   dataSource!: MatTableDataSource<Admin>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor( private adminService: AdministrateurService, private authService: AuthentificationService) {
+  constructor( private adminService: AdministrateurService,private _dialog: MatDialog, private authService: AuthentificationService) {
     this.adminConnecter = this.authService.getAdminConnect();
     this.dataSource = new MatTableDataSource(this.admins);
    }
@@ -79,4 +81,14 @@ export class AdministrateurComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  //ajouter un admin
+  OpenDialogAdd(enterAnimationDuration: string, exitAnimationDuration: string){
+    this._dialog.open(AjoutModifierAdminComponent,{enterAnimationDuration,
+      exitAnimationDuration});
+  }
+
+  //supprimer un admin
+
+
 }

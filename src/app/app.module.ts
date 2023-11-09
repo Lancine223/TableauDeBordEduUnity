@@ -43,6 +43,7 @@ import { DetailFiliereComponent } from './pages/detail-filiere/detail-filiere.co
     RouterModule,
     MatTableModule,
     AppRoutingModule,
+    // AppRoutingModule
   ],
   declarations: [
     AppComponent,

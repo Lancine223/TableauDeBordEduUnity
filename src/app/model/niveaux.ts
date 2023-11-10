@@ -1,10 +1,8 @@
-export class Niveaux {
-    public id: number;
-        public nom: string;
-    constructor(
-    nom: string,
-   
-      ) { 
-        this.nom= nom;
-       }
-}
+import { Filiere } from "./filiere.model";
+
+export interface Niveaux {
+     id: number;
+     nom: string;
+     filiere: Filiere[];
+     // Autres propriétés du niveau
+   }

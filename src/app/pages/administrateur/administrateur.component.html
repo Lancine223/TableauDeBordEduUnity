@@ -48,7 +48,11 @@
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                         <td mat-cell *matCellDef="let row">
-                        <i class="fas fa-trash" style="color: red;"  (click)="onDelete(row.idAdministrateur)" ></i>
+                        <button mat-icon-button btn-warn focusable="false" (click)="onDelete(row)" style="border: none; background-color: #fff; font-weight: bold;">
+                            <i class="fas fa-trash" style="color:red" ></i>
+                            <!-- <mat-icon aria-hidden="false" aria-label="delete" svgIcon="thumbs-up"></mat-icon> -->
+                            <!-- <i class="fa-solid fa-trash-can" style="color: red;"></i> -->
+                          </button>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

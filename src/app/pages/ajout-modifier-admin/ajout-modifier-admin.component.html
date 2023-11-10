@@ -22,10 +22,17 @@
             
           </div>
           <div class="form-group col-sm">
-            <label for="motDePasse">Mot de passe (en cm)</label>
+            <label for="motDePasse">Mot de passe </label>
             <input type="password" matInput class="form-control" id="motDePasse" placeholder="*****************"  formControlName="motDePasse" required >
           </div>
+          
 
+          <mat-form-field>
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let rol of roleadmin" [value]="rol">{{rol}}</mat-option>
+            </mat-select>
+          </mat-form-field>
           <!-- <div class="form-group col-sm">
             <label for="inputPassword4">Repeter Mot de passe (en cm)</label>
             <input type="password" matInput class="form-control" id="RepmotDePasse" placeholder="*****************"  formControlName="RepmotDePasse" required >
@@ -33,10 +40,10 @@
           
         
        
-        <div class="form-group col-sm" id="grid">
+        <div class="row" id="grid">
             
-            <button class="btn btn-secondary" mt-10 mat-raised-button type="button" [mat-dialog-close]="false" id="retour">Retour</button>
-            <button class="btn btn-primary" mt-10  mat-raised-button style="background-color: #725787;" type="submit" [disabled]="adminForm.invalid">{{data ? 'Modifier': 'Enregistrer'}}</button>
+            <button class="btn btn-round" mt-10 mat-raised-button type="button" [mat-dialog-close]="false" id="retour">Retour</button>
+            <button class="btn btn-round" mt-10  mat-raised-button style="background-color: #725787;" type="submit" [disabled]="adminForm.invalid">{{data ? 'Modifier': 'Enregistrer'}}</button>
         </div>
         </div>
       </form>

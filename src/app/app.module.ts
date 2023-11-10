@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table'
 import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import {MatPaginatorModule } from '@angular/material/paginator'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,11 +28,13 @@ import { AdministrateurComponent } from './pages/administrateur/administrateur.c
 import { HttpClientModule } from '@angular/common/http';
 import { DetailNiveauComponent } from './pages/detail-niveau/detail-niveau.component';
 import { DetailFiliereComponent } from './pages/detail-filiere/detail-filiere.component';
+import { ImageDetailComponent } from './pages/image-detail/image-detail.component';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     FormsModule,
+    MatSelectModule,
     ReactiveFormsModule,
     HttpClientModule,
     ComponentsModule,
@@ -63,6 +66,7 @@ import { DetailFiliereComponent } from './pages/detail-filiere/detail-filiere.co
     AdministrateurComponent,
     DetailNiveauComponent,
     DetailFiliereComponent,
+    ImageDetailComponent,
 
   ],
   providers: [],

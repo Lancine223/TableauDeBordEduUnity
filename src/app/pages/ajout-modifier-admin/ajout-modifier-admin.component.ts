@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Admin } from 'app/model/admin';
 import { AdministrateurService } from 'app/service/administrateur.service';
+import { AuthentificationService } from 'app/service/authentification.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,12 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class AjoutModifierAdminComponent implements OnInit {
   adminForm: FormGroup;
+  roleadmin: any[] = ["simple", "superadmin"];
 
   constructor(
     private _dialogRef: MatDialogRef<AjoutModifierAdminComponent>,
     private formBuilder: FormBuilder,
     private _dialog: MatDialog,
-    private adminService: AdministrateurService,
+    private adminService: AdministrateurService,private authService: AuthentificationService,
     @Inject(MAT_DIALOG_DATA) public data: Admin | any
   ) {
     this.adminForm = this.formBuilder.group({
@@ -26,7 +28,7 @@ export class AjoutModifierAdminComponent implements OnInit {
       prenom: [this.data ? this.data.prenom : '', Validators.required],
       email: [this.data ? this.data.email : '', Validators.required],
       motDePasse: [this.data ? this.data.motDePasse : '', Validators.required],
-      role: this.data ? this.data.role : ''
+      role: [this.data ? this.data.role : '', Validators.required]
     });
   }
 
@@ -36,21 +38,37 @@ export class AjoutModifierAdminComponent implements OnInit {
     if (this.adminForm.valid) {
       const data = this.adminForm.value;
       if (this.data) {
-        
-        // Modification
-        this.adminService.modifyAdmin(data); // Utilisez la valeur du formulaire
-        this.adminForm.reset();
-        this.adminService.triggerUpdate();
-        this._dialogRef.close(true);
-        Swal.fire('Merci !...', 'Admin modifié avec succès!', 'success');
+        // Update
+        this.adminService.modifyAdmin(data).subscribe(
+          (response) => {
+            console.log('Admin modifié avec succès:', response);
+            this.adminForm.reset();
+            this.adminService.triggerUpdate();
+            this.authService.setAdminConnect(this.data);
+            this._dialogRef.close(true);
+            Swal.fire('Merci !...', 'Admin modifié avec succès!', 'success');
+          },
+          (error) => {
+            console.error('Erreur lors de la modification de l\'administrateur:', error);
+          }
+        );
       } else {
-        // Ajout
-        this.adminService.addAdmin(data); // Utilisez la valeur du formulaire
-        this.adminForm.reset();
-        this.adminService.triggerUpdate();
-        this._dialogRef.close(true);
-        Swal.fire('Merci !...', 'Admin enregistré avec succès!', 'success');
+        // Create
+        this.adminService.addAdmin(data).subscribe(
+          (response) => {
+            console.log('Admin enregistré avec succès:', response);
+            this.adminForm.reset();
+            this.adminService.triggerUpdate();
+
+            this._dialogRef.close(true);
+            Swal.fire('Merci !...', 'Admin enregistré avec succès!', 'success');
+          },
+          (error) => {
+            console.error('Erreur lors de l\'ajout de l\'administrateur:', error);
+          }
+        );
       }
     }
   }
+  
 }

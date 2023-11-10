@@ -45,12 +45,16 @@ export class AdministrateurService {
 
 
   modifyAdmin(adminData: any) {
-    return this.http.put(this.baseUrl+'modifie', adminData);
+    return this.http.put("http://localhost:8080/admin/modifier", adminData);
   }
 
   
+  // deleteAdmin(adminData: any) {
+  //   return this.http.delete(this.baseUrl+'supprimer', { body: adminData });
+  // }
   deleteAdmin(adminData: any) {
-    return this.http.delete(this.baseUrl+'supprimer', { body: adminData });
+    return this.http.delete("http://localhost:8080/admin/supprimer", { body: adminData, responseType: 'text' });
   }
+  
 
 }

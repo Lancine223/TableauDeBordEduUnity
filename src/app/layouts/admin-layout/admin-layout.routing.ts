@@ -20,7 +20,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'etudiant',     component: EtudiantComponent },
     { path: 'admin',     component: AdministrateurComponent },
     { path: 'alert-en',          component: AlertEnseignantComponent },
-    { path: 'detail-niveau',          component: DetailNiveauComponent },
+    { path: 'detail-niveau/:id',          component: DetailNiveauComponent },
     { path: 'detail-filiere',          component: DetailFiliereComponent },
     
 ];

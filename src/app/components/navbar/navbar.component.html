@@ -29,9 +29,9 @@
                     </a>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" routerLink="/alert-en" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a *ngIf="nbrEnseignant > 0"  class="nav-link" routerLink="/alert-en" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell" style="font-size: 26px;"></i>
-                        <span class="notification">5</span>
+                        <span class="notification">{{nbrEnseignant}}</span>
                        
                     </a>
                     

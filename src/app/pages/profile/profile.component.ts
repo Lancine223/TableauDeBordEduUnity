@@ -17,7 +17,9 @@ adminConnecter: Admin|undefined ;
    }
 
   ngOnInit(): void {
+    this.authService.triggerUpdate();
 this.adminConnecter;
+
   }
 
   openEditForm(data: any, enterAnimationDuration: string, exitAnimationDuration: string) {
@@ -26,7 +28,7 @@ this.adminConnecter;
       data, enterAnimationDuration,
         exitAnimationDuration
     });
-    
+    this.authService.triggerUpdate();
   }
 
 }

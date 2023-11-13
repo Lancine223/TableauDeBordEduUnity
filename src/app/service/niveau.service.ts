@@ -14,21 +14,21 @@ export class NiveauService {
   private updateEvent = new Subject<void>();
 
   update$ = this.updateEvent.asObservable();
-  triggerUpdate() {
-    this.updateEvent.next();
-    this.updateEvent.complete();
-  }
+ 
   private baseUrl = 'http://localhost:8080/niveau/'; // Remplacez l'URL par celle de votre contrôleur Spring Boot
 
   constructor(private http: HttpClient) { }
 
+  triggerUpdate() {
+    this.updateEvent.next();
+  }
   addNiveau(niveauData: any) {
     return this.http.post("http://localhost:8080/niveau/add", niveauData);
   }
 
   
   getNiveauById(niveauId: number): Observable<Niveaux> {
-    const url = `${this.baseUrl}/read/${niveauId}`; // Remplacez avec votre URL d'API
+    const url = `${this.baseUrl}read/${niveauId}`; // Remplacez avec votre URL d'API
     return this.http.get<Niveaux>(url);
   }
 

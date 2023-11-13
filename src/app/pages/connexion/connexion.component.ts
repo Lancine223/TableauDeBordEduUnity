@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdministrateurService } from 'app/service/administrateur.service';
 import { AuthentificationService } from 'app/service/authentification.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-connexion',
@@ -31,14 +32,22 @@ export class ConnexionComponent implements OnInit {
           localStorage.setItem('idAdministrateur', IdAdmincon);
           this.autService.setAdminConnect(response);
           // Gérer la connexion réussie ici
-          console.log('Connexion réussie :', response);
+          this.autService.triggerUpdate()
           this.router.navigate(['/tableaudebord']);
         },
         (error) => {
-          // Gérer les erreurs de connexion ici
-          console.error('Erreur de connexion :', error);
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "Email ou mot de passe invalide !",
+
+            // footer: '<a href>Why do I have this issue?</a>'
+          })
         }
       );
+
+
     }
   }
 

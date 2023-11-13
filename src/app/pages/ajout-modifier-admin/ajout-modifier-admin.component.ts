@@ -31,8 +31,9 @@ export class AjoutModifierAdminComponent implements OnInit {
       role: [this.data ? this.data.role : '', Validators.required]
     });
   }
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.adminForm.patchValue(this.data);
+  }
 
   onSubmit() {
     if (this.adminForm.valid) {
@@ -43,30 +44,36 @@ export class AjoutModifierAdminComponent implements OnInit {
           (response) => {
             console.log('Admin modifié avec succès:', response);
             this.adminForm.reset();
-            this.adminService.triggerUpdate();
             this.authService.setAdminConnect(this.data);
+            this.adminService.triggerUpdate();
             this._dialogRef.close(true);
+          
             Swal.fire('Merci !...', 'Admin modifié avec succès!', 'success');
+            this.adminService.triggerUpdate();
           },
           (error) => {
             console.error('Erreur lors de la modification de l\'administrateur:', error);
           }
         );
+        this.adminService.triggerUpdate();
+       
       } else {
         // Create
+       
         this.adminService.addAdmin(data).subscribe(
           (response) => {
             console.log('Admin enregistré avec succès:', response);
             this.adminForm.reset();
             this.adminService.triggerUpdate();
-
             this._dialogRef.close(true);
             Swal.fire('Merci !...', 'Admin enregistré avec succès!', 'success');
+            this.adminService.triggerUpdate();
           },
           (error) => {
             console.error('Erreur lors de l\'ajout de l\'administrateur:', error);
           }
         );
+        this.adminService.triggerUpdate();
       }
     }
   }

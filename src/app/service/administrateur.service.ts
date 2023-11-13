@@ -17,13 +17,14 @@ export class AdministrateurService {
   update$ = this.updateEvent.asObservable();
   
 
-  triggerUpdate() {
-    this.updateEvent.next();
-    this.updateEvent.complete();
-  }
+ 
   private baseUrl = 'http://localhost:8080/admin/'; // Remplacez l'URL par celle de votre contrôleur Spring Boot
 
   constructor(private http: HttpClient) { }
+
+  triggerUpdate() {
+    this.updateEvent.next();
+  }
 
   addAdmin(adminData: any) {
     return this.http.post("http://localhost:8080/admin/add", adminData);

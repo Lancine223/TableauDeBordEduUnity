@@ -1,14 +1,14 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
+            <div class="col-lg-3 col-md-6 col-sm-6" >
+                <div class="card card-stats" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;">
                     <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="fas fa-user-graduate"></i>
                         </div>
                         <p class="card-category">Enseignant</p>
-                        <h6 class="card-title">20000
+                        <h6 class="card-title">{{nbrEnseignant}}
                            
                         </h6>
                     </div>
@@ -22,13 +22,13 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
+                <div class="card card-stats" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;">
+                    <div class="card-header card-header-primary card-header-icon">
                         <div class="card-icon">
                             <i class="fas fa-users"></i>
                         </div>
                         <p class="card-category">Etudiant</p>
-                        <h6 class="card-title">1000</h6>
+                        <h6 class="card-title">{{nbrEtudiant}}</h6>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -40,13 +40,13 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-purple card-header-icon">
+                <div class="card card-stats" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;">
+                    <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <i class="fas fa-user-tag"></i>
                         </div>
                         <p class="card-category">Abonnés</p>
-                        <h6 class="card-title">500</h6>
+                        <h6 class="card-title">{{totalAbonnes}}</h6>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -58,13 +58,13 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
+                <div class="card card-stats" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;">
                     <div class="card-header card-header-primary card-header-icon">
                         <div class="card-icon">
                             <i class="fas fa-coins"></i>
                         </div>
                         <p class="card-category">Budgets</p>
-                        <h6 class="card-title">1000000 F</h6>
+                        <h6 class="card-title">{{totalMontantAbonnements}} F</h6>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -149,14 +149,14 @@
 
         <div class="row" >
             <div class="col-lg-6 col-md-12" *ngFor="let niveau of datasource">
-                <div class="card">
-                    <div class="card-header card-header-purple" style="background-color: #8F8B8B !important;">
+                <div class="card" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;">
+                    <div class="card-header card-header-purple" style="background-color: #8F8B8B !important; box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;">
                         <h4 class="card-title">{{niveau.nom}}</h4>
                         <!-- <p class="card-category">New employees on 15th September, 2016</p> -->
                     </div>
                     <div class="card-body table-responsive">
-                        <div style="display: flex;"> <div> <span (click)="detailerniv(niveau)"><i class="fas fa-eye"></i></span>
-                            <span [routerLink]="['/detail-niveau', niveau.idNiveau]" style="margin-left: 30px;"><i class="fas fa-edit"></i></span>  
+                        <div class="row"> <div> <a class="btn btn-round" (click)="detailNiveau(niveau.idNiveau)"><i class="fas fa-eye"></i> Voir les filieres</a>
+                            <span class="btn btn-round" [routerLink]="['../detail-niveau', niveau.idNiveau]" style="background-color: #725787 !important; box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;"><i class="fas fa-edit"></i> Modifier</span>  
                         </div> </div>
                     </div>
                 </div>

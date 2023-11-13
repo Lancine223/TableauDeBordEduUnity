@@ -26,17 +26,44 @@ export class EnseignantComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor( private enseignantsService: EnseigantService, private _dialog: MatDialog, private authService: AuthentificationService) {
-    this.adminConnecter = this.authService.getAdminConnect();
-    this.dataSource = new MatTableDataSource(this.enseignants);
+    // this.adminConnecter = this.authService.getAdminConnect();
+ 
    }
 
+  
    ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   ngOnInit(){
-   this.loadEnseignantList();
+  this.enseignantsService.getEnseignantList().subscribe(
+    (data) => {
+      this.enseignants = data.filter(enseignant => enseignant.acces === true);
+      this.dataSource = new MatTableDataSource(this.enseignants);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+     
+    },
+    (error) => {
+      console.error('Erreur lors du chargement de la liste des enseignants:', error);
+    }
+  );
+  }
+
+chargerDonner(){
+    this.enseignantsService.getEnseignantList().subscribe(
+      (data) => {
+        this.enseignants = data.filter(enseignant => enseignant.acces === true);
+        this.dataSource = new MatTableDataSource(this.enseignants);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        
+      },
+      (error) => {
+        console.error('Erreur lors du chargement de la liste des enseignants:', error);
+      }
+    );
   }
 
   agrandirImage(urlImage: string) {
@@ -47,36 +74,24 @@ export class EnseignantComponent implements OnInit {
     });
   }
   
-
 // Exemple pour charger la liste des administrateurs
-loadEnseignantList(): void {
-  this.enseignantsService.getEnseignantList().subscribe(
-    (data) => {
-      this.enseignants = data;
-      this.dataSource = new MatTableDataSource(this.enseignants);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.enseignantsService.update$.subscribe(() => {
-        // Mettez à jour vos données ici
-        this.refreshData();
-    });
-    },
-    (error) => {
-      console.error('Erreur lors du chargement de la liste des enseigants:', error);
-    }
-  );
-}
-
-   refreshData() {
-    // Mettez à jour vos données (par exemple, récupérez à nouveau les mesures)
-    // Appel de la méthode du service pour récupérer les Enseignants
-    this.enseignants = this.enseignantsService.getEnseignantList();
-    this.dataSource = new MatTableDataSource(this.enseignants);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
- 
-
+// loadEnseignantList(): void {
+//   this.enseignantsService.getEnseignantList().subscribe(
+//     (data) => {
+//       this.enseignants = data;
+//       this.dataSource = new MatTableDataSource(this.enseignants);
+//       this.dataSource.paginator = this.paginator;
+//       this.dataSource.sort = this.sort;
+//       this.enseignantsService.update$.subscribe(() => {
+//         // Mettez à jour vos données ici
+//         this.refreshData();
+//     });
+//     },
+//     (error) => {
+//       console.error('Erreur lors du chargement de la liste des enseigants:', error);
+//     }
+//   );
+// }
    applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -85,6 +100,7 @@ loadEnseignantList(): void {
       this.dataSource.paginator.firstPage();
     }
   }
+
 
   
 
@@ -101,25 +117,19 @@ loadEnseignantList(): void {
       cancelButtonText: 'Non, garde-le'
     }).then((result) => {
       if (result.value) {
-        
         this.enseignantsService.triggerUpdate();
-        this.enseignantsService.deleteEnseignant(data).subscribe(
-          (response) => {
-            console.log('enseignant supprimé avec succès:', response);
-            // Additional logic if needed
-            this.enseignantsService.triggerUpdate();
-            this.dataSource = new MatTableDataSource(this.enseignants);
-            this.loadEnseignantList();
-            Swal.fire(
-              'Supprimer!',
-              'Cette enseignant a été supprimer.',
-              'success'
-            )
-          },
-          (error) => {
-            console.error('Erreur lors de la suppression de l\'enseignant:', error);
-          }
-        );
+        this.chargerDonner();
+      this.enseignantsService.deleteEnseignant(data).subscribe();
+          
+          // Additional logic if needed
+      this.enseignantsService.triggerUpdate();
+      this.chargerDonner();
+      Swal.fire(
+        'Supprimer!',
+        'Cette enseignant a été supprimer.',
+        'success'
+      )
+
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Annuler',
@@ -131,7 +141,7 @@ loadEnseignantList(): void {
   }
 
    // Exemple pour supprimer un administrateur
-   DesActivate(data: any){
+  onDesActivate(idEnseigant: number){
     Swal.fire({
       title: 'Êtes-vous sûr de vouloir de desactiver?',
       text: 'Il ne pourra plus acceder à la plateforme !',
@@ -142,24 +152,17 @@ loadEnseignantList(): void {
     }).then((result) => {
       if (result.value) {
         
-        this.enseignantsService.triggerUpdate();
-        this.enseignantsService.ChangeAccesEnseigant(data).subscribe(
-          (response) => {
-            console.log('enseignant desactivé avec succès:', response);
-            // Additional logic if needed
-            this.enseignantsService.triggerUpdate();
-            this.dataSource = new MatTableDataSource(this.enseignants);
-            this.loadEnseignantList();
-            Swal.fire(
-              'Supprimer!',
-              'Cet enseignant a été desactiver.',
-              'success'
-            )
-          },
-          (error) => {
-            console.error('Erreur lors de la desactivation de l\'enseignant:', error);
-          }
-        );
+        this.enseignantsService.changeAccess(idEnseigant).subscribe();
+         // Réalisez une action en cas de succès (rafraîchir la liste par exemple)
+         this.enseignantsService.triggerUpdate();
+         this.chargerDonner();
+         Swal.fire(
+          'Desactivation!',
+       'Cet enseignant a été desactiver.',
+       'success'
+     )
+     this.enseignantsService.triggerUpdate();
+         this.chargerDonner();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Annuler',
@@ -169,47 +172,6 @@ loadEnseignantList(): void {
       }
     })
   }
-
-  // Exemple pour supprimer un administrateur
-  onActivate(data: any){
-    Swal.fire({
-      title: 'Êtes-vous sûr de vouloir activer?',
-      text: 'Il pourra donc acceder à la plateforme !',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Oui, active-le !',
-      cancelButtonText: 'Non, garde-le'
-    }).then((result) => {
-      if (result.value) {
-        
-        this.enseignantsService.triggerUpdate();
-        this.enseignantsService.ChangeAccesEnseigant(data).subscribe(
-          (response) => {
-            console.log('enseignant activé avec succès:', response);
-            // Additional logic if needed
-            this.enseignantsService.triggerUpdate();
-            this.dataSource = new MatTableDataSource(this.enseignants);
-            this.loadEnseignantList();
-            Swal.fire(
-              'Supprimer!',
-              'Cet enseignant a été activer.',
-              'success'
-            )
-          },
-          (error) => {
-            console.error('Erreur lors de activation de l\'enseignant:', error);
-          }
-        );
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Annuler',
-          'Votre enseignant est en sécurité ',
-          'error'
-        )
-      }
-    })
-  }
-
 
 
 }

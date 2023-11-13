@@ -1,5 +1,5 @@
 .nom{
-    background: #ffffff;
+    background: #725787;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -7,4 +7,7 @@
     display: grid;
     justify-content: center;
     align-items: center;
+}
+.img{
+    box-sizing: border-box;
 }

@@ -40,9 +40,11 @@ export class AdministrateurComponent implements OnInit {
 
 // Exemple pour charger la liste des administrateurs
 loadAdminList(): void {
+  this.adminService.triggerUpdate();
   this.adminService.getAdminList().subscribe(
     (data) => {
       this.admins = data;
+
       this.dataSource = new MatTableDataSource(this.admins);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -60,6 +62,7 @@ loadAdminList(): void {
    refreshData() {
     // Mettez à jour vos données (par exemple, récupérez à nouveau les mesures)
     // Appel de la méthode du service pour récupérer les mesures
+    this.adminService.triggerUpdate();
     this.admins = this.adminService.getAdminList();
     this.dataSource = new MatTableDataSource(this.admins);
     this.dataSource.paginator = this.paginator;
@@ -125,19 +128,6 @@ loadAdminList(): void {
   }
 
    // Exemple pour supprimer un administrateur
-   deleteAdmin(data: any): void {
-    this.adminService.deleteAdmin(data).subscribe(
-      (response) => {
-        console.log('Admin supprimé avec succès:', response);
-        // Additional logic if needed
-        this.adminService.triggerUpdate();
-        Swal.fire('Merci !...', 'Admin supprimé avec succès!', 'success');
-      },
-      (error) => {
-        console.error('Erreur lors de la suppression de l\'administrateur:', error);
-      }
-    );
-    
-  }
+  
 
 }

@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { Enseignant } from 'app/model/enseignant';
+import { EnseigantService } from 'app/service/enseigant.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,8 +16,10 @@ export class NavbarComponent implements OnInit {
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    listeEnseignants: Enseignant[]| any;
+  nbrEnseignant: number;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private enseignantService: EnseigantService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -32,7 +36,10 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
-    }
+     this.enseignantService.triggerUpdate();
+     this.loadEnseignantList();
+    this.counten();
+}
 
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -122,4 +129,35 @@ export class NavbarComponent implements OnInit {
       }
       return 'Dashboard';
     }
+
+
+    ////++++++++++++++++++++++++++
+    // Exemple pour charger la liste des administrateurs
+loadEnseignantList() {
+    this.enseignantService.triggerUpdate();
+    this.enseignantService.getEnseignantList().subscribe(
+      (data) => {
+        this.listeEnseignants = data;
+        this.nbrEnseignant = this.counten(); // Appel à la fonction de comptage ici
+        // ... le reste du code
+        console.log("nombre :" , this.nbrEnseignant);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement de la liste des enseignants:', error);
+      }
+    );
+  }
+  
+  counten(): number {
+    return this.listeEnseignants.reduce((total, enseignant) => {
+      if (enseignant.acces == false) {
+        return total + 1;
+      } else {
+        return total;
+      }
+    }, 0);
+  }
+  
+    ///////++++++++++++++++
+
 }

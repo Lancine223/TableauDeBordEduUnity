@@ -1,8 +1,8 @@
 import { Filiere } from "./filiere.model";
 
 export interface Niveaux {
-     id: number;
+     idNiveau: number;
      nom: string;
-     filiere: any[];
+     filiere: Filiere;
      // Autres propriétés du niveau
    }

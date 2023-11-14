@@ -10,5 +10,5 @@ export interface Enseignant {
   motDePasse:    string;
   classe:        string;
   apropos:       string;
-  abonnement: string;
+  nombreAbonnes: number;
 }

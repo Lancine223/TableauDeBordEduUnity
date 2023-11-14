@@ -75,24 +75,7 @@ export class AlertEnseignantComponent implements OnInit {
   }
   
 
-// Exemple pour charger la liste des administrateurs
-// loadEnseignantList(): void {
-//   this.enseignantsService.getEnseignantList().subscribe(
-//     (data) => {
-//       this.enseignants = data;
-//       this.dataSource = new MatTableDataSource(this.enseignants);
-//       this.dataSource.paginator = this.paginator;
-//       this.dataSource.sort = this.sort;
-//       this.enseignantsService.update$.subscribe(() => {
-//         // Mettez à jour vos données ici
-//         this.refreshData();
-//     });
-//     },
-//     (error) => {
-//       console.error('Erreur lors du chargement de la liste des enseigants:', error);
-//     }
-//   );
-// }
+
 
    applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

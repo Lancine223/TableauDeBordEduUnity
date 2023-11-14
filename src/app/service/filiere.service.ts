@@ -16,39 +16,42 @@ export class FiliereService {
 
   update$ = this.updateEvent.asObservable();
  
-  private baseUrl = 'http://localhost:8080/filiere/'; // Remplacez l'URL par celle de votre contrôleur Spring Boot
+  private baseUrl = 'http://localhost:8080/filiere'; // Remplacez l'URL par celle de votre contrôleur Spring Boot
 
   constructor(private http: HttpClient) { }
   triggerUpdate() {
     this.updateEvent.next();
   }
-  addFiliere(filiereData: any) {
-    return this.http.post("http://localhost:8080/filiere/add", filiereData);
+
+  // Ajouter une filière
+  ajouterFiliere(filiere: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add`, filiere);
   }
 
-  
-  getFiliereById(filiereId: number): Observable<Filiere> {
-    const url = `${this.baseUrl}read/${filiereId}`; // Remplacez avec votre URL d'API
-    return this.http.get<Filiere>(url);
+  // Récupérer la liste des filières
+  getAllFilieres(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/list`);
   }
 
-  getFiliereList():Observable<any> {
-    return this.http.get("http://localhost:8080/filiere/list");
-    // console.log(this.getAdminList());
+  // Récupérer la liste des filières par niveau
+  getFilieresByNiveau(idNiveau: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/list/${idNiveau}`);
   }
 
-  // Méthode pour récupérer les informations de l'administrateur connecté
-
-  modifyFiliere(filiereData: any) {
-    return this.http.put("http://localhost:8080/filiere/modifier", filiereData);
+  // Récupérer une filière par son ID
+  getOneFiliere(idFiliere: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/read/${idFiliere}`);
   }
 
-  
-  // deleteAdmin(adminData: any) {
-  //   return this.http.delete(this.baseUrl+'supprimer', { body: adminData });
-  // }
-  deleteFiliere(filiereData: any) {
-    return this.http.delete("http://localhost:8080/filiere/supprimer", { body: filiereData, responseType: 'text' });
+  // Modifier une filière
+  modifierFiliere(filiere: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/modifier`, filiere);
   }
+
+  // Supprimer une filière
+  supprimerFiliere(filiere: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/supprimer`, { body: filiere });
+  }
+
   
 }

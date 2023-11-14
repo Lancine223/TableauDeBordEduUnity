@@ -161,5 +161,12 @@ refreshEnseignant() {
       exitAnimationDuration});
   }
 
+  openEditForm(data: Niveaux, enterAnimationDuration: string, exitAnimationDuration: string) {
+    const dialogRef = this._dialog.open(AjoutModifierNiveauComponent,  {
+      data, enterAnimationDuration,
+        exitAnimationDuration
+    });
+  }
+
   
 }

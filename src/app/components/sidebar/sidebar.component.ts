@@ -41,4 +41,8 @@ export class SidebarComponent implements OnInit {
       }
       return true;
   };
+  deConnecter(){
+   return this.authService.deconnecter();
+  }
+
 }

@@ -9,18 +9,19 @@ import { ConnexionComponent } from 'app/pages/connexion/connexion.component';
 import { AdministrateurComponent } from 'app/pages/administrateur/administrateur.component';
 import { DetailNiveauComponent } from 'app/pages/detail-niveau/detail-niveau.component';
 import { DetailFiliereComponent } from 'app/pages/detail-filiere/detail-filiere.component';
+import { AuthGuardService } from 'app/service/auth-guard.service';
 // import { ConnexionComponent } from 'app/pages/connexion/connexion.component';
 
 export const AdminLayoutRoutes: Routes = [
  
     { path: 'login',      component: ConnexionComponent },
-    { path: 'tableaudebord',      component: TableauDeBordComponent },
-    { path: 'profile',   component: ProfileComponent },
-    { path: 'enseignant',      component: EnseignantComponent },
-    { path: 'etudiant',     component: EtudiantComponent },
-    { path: 'admin',     component: AdministrateurComponent },
-    { path: 'alert-en',          component: AlertEnseignantComponent },
-    { path: 'detail-niveau/:id',          component: DetailNiveauComponent },
-    { path: 'detail-filiere',          component: DetailFiliereComponent },
+    { path: 'tableaudebord', canActivate : [AuthGuardService],     component: TableauDeBordComponent },
+    { path: 'profile',canActivate : [AuthGuardService],    component: ProfileComponent },
+    { path: 'enseignant',canActivate : [AuthGuardService],       component: EnseignantComponent },
+    { path: 'etudiant',canActivate : [AuthGuardService],      component: EtudiantComponent },
+    { path: 'admin',canActivate : [AuthGuardService],      component: AdministrateurComponent },
+    { path: 'alert-en', canActivate : [AuthGuardService],          component: AlertEnseignantComponent },
+    { path: 'detail-niveau/:id',canActivate : [AuthGuardService],           component: DetailNiveauComponent },
+    { path: 'detail-filiere',  canActivate : [AuthGuardService],         component: DetailFiliereComponent },
     
 ];

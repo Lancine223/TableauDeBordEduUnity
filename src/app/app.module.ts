@@ -29,6 +29,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { DetailNiveauComponent } from './pages/detail-niveau/detail-niveau.component';
 import { DetailFiliereComponent } from './pages/detail-filiere/detail-filiere.component';
 import { ImageDetailComponent } from './pages/image-detail/image-detail.component';
+import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
+import { ModifierfiliereComponent } from './pages/modifierfiliere/modifierfiliere.component';
+import { ModifierclasseComponent } from './pages/modifierclasse/modifierclasse.component';
 
 @NgModule({
   imports: [
@@ -67,6 +70,9 @@ import { ImageDetailComponent } from './pages/image-detail/image-detail.componen
     DetailNiveauComponent,
     DetailFiliereComponent,
     ImageDetailComponent,
+    FourOhFourComponent,
+    ModifierfiliereComponent,
+    ModifierclasseComponent,
 
   ],
   providers: [],

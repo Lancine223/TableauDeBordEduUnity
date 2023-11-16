@@ -15,80 +15,49 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./ajout-modifier-filiere.component.scss']
 })
 export class AjoutModifierFiliereComponent implements OnInit {
-  niveau: Niveaux;
   filiereForm: FormGroup;
   // roleadmin: any[] = ["simple", "superadmin"];
-
 
   constructor(
     private _dialogRef: MatDialogRef<AjoutModifierAdminComponent>,
     private formBuilder: FormBuilder,
     private _dialog: MatDialog,
-    private route: ActivatedRoute,
-     private router: Router,
-    private niveauService: NiveauService,
     private filiereService: FiliereService,
-    @Inject(MAT_DIALOG_DATA) public data: Filiere | any , 
-  
+    @Inject(MAT_DIALOG_DATA) public data: Niveaux | any
   ) {
     this.filiereForm = this.formBuilder.group({
-      idFiliere:'',
-      niveau:  this.niveau , // Si c'est une modification, initialisez avec l'ID existant
-      nom: ['', Validators.required ]
-      
+       // Si c'est une modification, initialisez avec l'ID existant
+       idFiliere:'',
+      nom: ['', Validators.required],
+      niveau: this.data
     });
   }
   ngOnInit(): void {
-    this.filiereForm.patchValue(this.data);
-
-    this.route.paramMap.subscribe(params => {
-      const id = +params.get('id'); // Convertir l'ID en nombre
-      this.niveauService.getNiveauById(id).subscribe(niveau => this.niveau = niveau);
-    });
+    console.log(" data :", this.data);
+    console.log(" data valeur :", this.data.value);
   }
 
   onSubmit() {
     if (this.filiereForm.valid) {
       const data = this.filiereForm.value;
-      if (this.data) {
-        // Update
-        this.filiereService.modifierFiliere(data).subscribe(
-          (response) => {
-            console.log('Filiere modifié avec succès:', response);
-            this.filiereForm.reset();
-            this.filiereService.triggerUpdate();
-            this._dialogRef.close(true);
-          
-            Swal.fire('Merci !...', 'Filiere modifié avec succès!', 'success');
-            this.filiereService.triggerUpdate();
-          },
-          (error) => {
-            console.error('Erreur lors de la modification de Filiere:', error);
-          }
-        );
-        this._dialogRef.close(true);
-        this.filiereService.triggerUpdate();
-       
-      } else {
+      
         // Create
        
         this.filiereService.ajouterFiliere(data).subscribe(
           (response) => {
-            console.log('Filiere enregistré avec succès:', response);
+            console.log('filiere enregistré avec succès:', response);
             this.filiereForm.reset();
             this.filiereService.triggerUpdate();
             this._dialogRef.close(true);
-            Swal.fire('Merci !...', 'Filiere enregistré avec succès!', 'success');
+            Swal.fire('Merci !...', 'filiere enregistré avec succès!', 'success');
             this.filiereService.triggerUpdate();
           },
           (error) => {
-            console.error('Erreur lors de l\'ajout de Filiere:', error);
+            console.error('Erreur lors de l\'ajout de filiere:', error);
           }
         );
         this._dialogRef.close(true);
         this.filiereService.triggerUpdate();
-      }
     }
   }
-
 }

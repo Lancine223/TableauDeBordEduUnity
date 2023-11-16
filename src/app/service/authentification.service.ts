@@ -12,7 +12,7 @@ export class AuthentificationService {
   }
   
   private admin1 : Admin|undefined;
- 
+  public isAuth : boolean = false;
   constructor() { }
 
   private updateEvent = new Subject<void>();
@@ -25,11 +25,14 @@ export class AuthentificationService {
   }
   setAdminConnect(admin : Admin) {
     this.admin1 = admin;
+    this.isAuth = true;
   }
   getAdminConnect():Admin |undefined { 
     return this.admin1;
   }
-  
+  deconnecter(){
+    this.isAuth = false;
+  }
   
 
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NiveauComponent } from './niveau.component';
+import { AbonnementComponent } from './abonnement.component';
 
-describe('NiveauComponent', () => {
-  let component: NiveauComponent;
-  let fixture: ComponentFixture<NiveauComponent>;
+describe('AbonnementComponent', () => {
+  let component: AbonnementComponent;
+  let fixture: ComponentFixture<AbonnementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NiveauComponent ]
+      declarations: [ AbonnementComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NiveauComponent);
+    fixture = TestBed.createComponent(AbonnementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

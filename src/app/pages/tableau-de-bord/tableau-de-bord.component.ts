@@ -53,6 +53,9 @@ export class TableauDeBordComponent implements OnInit {
     this.loadEtudiantList();
     this.totalAbonner();
     this.sommetotalAbonne();
+    this.niveauService.updateEvent.subscribe((result) => {
+      this.loadNiveauList();
+    })
   }
 
   detailNiveau(id: number) {
@@ -60,6 +63,7 @@ export class TableauDeBordComponent implements OnInit {
     this.route.navigate(['../detail-niveau', id]);
   }
 // Exemple pour charger la liste des administrateurs
+
 loadNiveauList(): void {
   this.niveauService.getNiveauList().subscribe(
     (data) => {
@@ -75,6 +79,38 @@ loadNiveauList(): void {
       console.error('Erreur lors du chargement de la liste des administrateurs:', error);
     }
   );
+}
+
+onDelete(data: any){
+  Swal.fire({
+    title: 'Êtes-vous sûr de vouloir supprimer?',
+    text: 'Vous ne pourriez plus récupérer cet niveau !',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, supprimez-le !',
+    cancelButtonText: 'Non, garde-le'
+  }).then((result) => {
+    if (result.value) {
+      this.niveauService.triggerUpdate();
+      this.loadNiveauList();
+      this.niveauService.deleteNiveau(data).subscribe();
+      this.niveauService.triggerUpdate();
+      this.loadNiveauList();
+      Swal.fire(
+        'Supprimer!',
+        'Cet niveau a été supprimer.',
+        'success'
+      )
+      this.niveauService.triggerUpdate();
+      this.loadNiveauList();
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire(
+        'Annuler',
+        'Le niveau est en sécurité ',
+        'error'
+      )
+    }
+  })
 }
 
 // Exemple pour charger la liste des administrateurs

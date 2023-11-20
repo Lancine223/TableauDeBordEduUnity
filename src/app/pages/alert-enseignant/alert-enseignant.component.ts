@@ -18,7 +18,7 @@ import { ImageDetailComponent } from '../image-detail/image-detail.component';
 export class AlertEnseignantComponent implements OnInit {
   listeData:any = [];
   enseignants: Enseignant[]|any;
-  displayedColumns: string[] = ['id', 'nom', 'prenom','telephone', 'etablissement','filiere', 'classe', 'email', 'diplome','acces', 'action'];  
+  displayedColumns: string[] = ['id', 'nom', 'prenom','telephone', 'etablissement','filiere', 'classe', 'email', 'diplome', 'action'];  
   // admins: Admin []|any;
 
   adminConnecter: Admin|undefined ;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthGuardService } from 'app/service/auth-guard.service';
 import { AuthentificationService } from 'app/service/authentification.service';
 
 declare const $: any;
@@ -15,6 +16,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/etudiant', title: 'Etudiant',  icon:'fa-users', class: '' },
     { path: '/admin', title: 'Admin',  icon:'fa-user-shield', class: '' },
     { path: '/alert-en', title: 'Alert',  icon:'fa-bell', class: '' },
+    { path: '/abonnement', title: 'Abonnement',  icon:'fa-money', class: '' },
 
 ];
 
@@ -27,7 +29,8 @@ export class SidebarComponent implements OnInit {
   menuItems: any[];
   
 
-  constructor(private authService: AuthentificationService) { 
+  constructor(private authService: AuthentificationService,
+    private authguardService: AuthGuardService) { 
     
   }
 
@@ -42,7 +45,7 @@ export class SidebarComponent implements OnInit {
       return true;
   };
   deConnecter(){
-   return this.authService.deconnecter();
+   this.authService.deconnecter();
   }
 
 }

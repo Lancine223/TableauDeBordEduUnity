@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,9 @@ export class AbonnementService {
   triggerUpdate() {
     this.updateEvent.next();
   }
+  getAllAbonnement():Observable<any>{
+    return this.http.get('http://localhost:8080/abonnement/list')
+  }
   
   getTotalAbonnes() {
     return this.http.get<number>(`${this.baseUrl}/totalAbonnes`);
@@ -27,5 +30,9 @@ export class AbonnementService {
 
   getTotalMontantAbonnements() {
     return this.http.get<number>(`${this.baseUrl}/totalMontantAbonnements`);
+  }
+  supprimerAbonnement(abonnement: any): Observable<string> {
+    const url = `${this.baseUrl}/supprimer`;
+    return this.http.delete<string>(url, { body: abonnement });
   }
 }

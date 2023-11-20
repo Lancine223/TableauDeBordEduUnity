@@ -31,6 +31,7 @@ export class AuthentificationService {
     return this.admin1;
   }
   deconnecter(){
+    this.admin1=null;
     this.isAuth = false;
   }
   

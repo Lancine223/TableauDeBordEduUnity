@@ -22,7 +22,6 @@ import { AjoutModifierAdminComponent } from './pages/ajout-modifier-admin/ajout-
 import { AjoutModifierNiveauComponent } from './pages/ajout-modifier-niveau/ajout-modifier-niveau.component';
 import { AjoutModifierFiliereComponent } from './pages/ajout-modifier-filiere/ajout-modifier-filiere.component';
 import { AjoutModifierClasseComponent } from './pages/ajout-modifier-classe/ajout-modifier-classe.component';
-import { NiveauComponent } from './pages/niveau/niveau.component';
 import { MatDialogModule} from '@angular/material/dialog';
 import { AdministrateurComponent } from './pages/administrateur/administrateur.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,6 +31,7 @@ import { ImageDetailComponent } from './pages/image-detail/image-detail.componen
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
 import { ModifierfiliereComponent } from './pages/modifierfiliere/modifierfiliere.component';
 import { ModifierclasseComponent } from './pages/modifierclasse/modifierclasse.component';
+import { AbonnementComponent } from './pages/abonnement/abonnement.component';
 
 @NgModule({
   imports: [
@@ -65,7 +65,6 @@ import { ModifierclasseComponent } from './pages/modifierclasse/modifierclasse.c
     AjoutModifierNiveauComponent,
     AjoutModifierFiliereComponent,
     AjoutModifierClasseComponent,
-    NiveauComponent,
     AdministrateurComponent,
     DetailNiveauComponent,
     DetailFiliereComponent,
@@ -73,6 +72,7 @@ import { ModifierclasseComponent } from './pages/modifierclasse/modifierclasse.c
     FourOhFourComponent,
     ModifierfiliereComponent,
     ModifierclasseComponent,
+    AbonnementComponent,
 
   ],
   providers: [],

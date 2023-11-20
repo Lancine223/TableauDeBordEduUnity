@@ -10,6 +10,7 @@ import { AdministrateurComponent } from 'app/pages/administrateur/administrateur
 import { DetailNiveauComponent } from 'app/pages/detail-niveau/detail-niveau.component';
 import { DetailFiliereComponent } from 'app/pages/detail-filiere/detail-filiere.component';
 import { AuthGuardService } from 'app/service/auth-guard.service';
+import { AbonnementComponent } from 'app/pages/abonnement/abonnement.component';
 // import { ConnexionComponent } from 'app/pages/connexion/connexion.component';
 
 export const AdminLayoutRoutes: Routes = [
@@ -21,7 +22,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'etudiant',canActivate : [AuthGuardService],      component: EtudiantComponent },
     { path: 'admin',canActivate : [AuthGuardService],      component: AdministrateurComponent },
     { path: 'alert-en', canActivate : [AuthGuardService],          component: AlertEnseignantComponent },
+    { path: 'abonnement', canActivate : [AuthGuardService],          component: AbonnementComponent },
     { path: 'detail-niveau/:id',canActivate : [AuthGuardService],           component: DetailNiveauComponent },
-    { path: 'detail-filiere',  canActivate : [AuthGuardService],         component: DetailFiliereComponent },
+    { path: 'detail-filiere/:id',  canActivate : [AuthGuardService],         component: DetailFiliereComponent },
     
 ];

@@ -6,6 +6,7 @@ import * as $ from "jquery";
 import { filter, Subscription } from 'rxjs';
 import { AuthentificationService } from 'app/service/authentification.service';
 import { Admin } from 'app/model/admin';
+import { AdministrateurService } from 'app/service/administrateur.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -14,18 +15,45 @@ import { Admin } from 'app/model/admin';
 })
 export class AdminLayoutComponent implements OnInit {
   private _router: Subscription;
+
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
+  admConnect: Admin;
+  idAdministrateurlocal:any;
   
-  constructor( public location: Location, private router: Router) {
-    // this.statusAdmin = this.authService.getAdminConnect();
+  constructor( public location: Location,
+    private authService: AuthentificationService
+    , 
+    private router: Router) {
+    this.admConnect = this.authService.getAdminConnect();
+    this.idAdministrateurlocal= localStorage.getItem("idAdministrateur");
   }
 
   
 
   ngOnInit() {
+
+    this.authService.update$.subscribe(() => {
+        if(localStorage.getItem("idAdministrateur")!=null){
+            this.idAdministrateurlocal=(localStorage.getItem("idAdministrateur"));
+        }else{
+            this.idAdministrateurlocal=0;
+        }
+      });
+    
+    
+    if(localStorage.getItem("idAdministrateur")!=null){
+        console.log("on est ds admin==========",localStorage.getItem("idAdministrateur"));
+        this.idAdministrateurlocal=(localStorage.getItem("idAdministrateur"));
+    }else{
+        console.log("on est ds admin==PAS USER========",localStorage.getItem("idAdministrateur"));
+        this.idAdministrateurlocal=0;
+    }
+    
+    
     // this.statusAdmin = this.authService.getAdminConnect();
     // console.log('status ad:', this.statusAdmin);
+    
 
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 

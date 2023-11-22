@@ -27,6 +27,7 @@ export class AlertEnseignantComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor( private enseignantsService: EnseigantService, private _dialog: MatDialog, private authService: AuthentificationService) {
     // this.adminConnecter = this.authService.getAdminConnect();
+    this.chargerDonner();
    
     
    }
@@ -37,17 +38,9 @@ export class AlertEnseignantComponent implements OnInit {
   }
 
   ngOnInit(){
-  this.enseignantsService.getEnseignantList().subscribe(
-    (data) => {
-      this.enseignants = data.filter(enseignant => enseignant.acces === false);
-      this.dataSource = new MatTableDataSource(this.enseignants);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    },
-    (error) => {
-      console.error('Erreur lors du chargement de la liste des enseignants:', error);
-    }
-  );
+    this.enseignantsService.update$.subscribe(() => {
+      this.chargerDonner();
+    });
   }
 
   chargerDonner(){
@@ -94,7 +87,7 @@ export class AlertEnseignantComponent implements OnInit {
   onDelete(data: any){
     Swal.fire({
       title: 'Êtes-vous sûr de vouloir supprimer?',
-      text: 'Vous ne pourriez plus récupérer cette enseignant!',
+      text: 'Vous ne pourriez plus récupérer cet enseignant!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Oui, supprimez-le !',
@@ -102,16 +95,23 @@ export class AlertEnseignantComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         
-        this.enseignantsService.deleteEnseignant(data).subscribe();
-        this.enseignantsService.triggerUpdate();
-        this.chargerDonner();
-        Swal.fire(
-          'Supprimer!',
-          'Cette enseignant a été supprimer.',
-          'success'
-        )
-        this.enseignantsService.triggerUpdate();
-        this.chargerDonner();
+        this.enseignantsService.deleteEnseignant(data).subscribe(
+          (response) => {
+            console.log('enseignant supprimé avec succès:', response);
+            // Additional logic if needed
+            this.enseignantsService.triggerUpdate();
+            // this.dataSource = new MatTableDataSource(this.admins);
+            // this.loadAdminList();
+            Swal.fire(
+              'Supprimer!',
+              'Cet enseignant a été supprimer.',
+              'success'
+            )
+          },
+          (error) => {
+            console.error('Erreur lors de la suppression de l\'enseignant:', error);
+          }
+        );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Annuler',
@@ -132,8 +132,8 @@ onActivate(idEnseigant: number){
       cancelButtonText: 'Non, garde-le'
     }).then((result) => {
       if (result.value) {
-        this.enseignantsService.triggerUpdate();
-        this.chargerDonner();
+        // this.enseignantsService.triggerUpdate();
+        // this.chargerDonner();
         this.enseignantsService.changeAccess(idEnseigant).subscribe();
         this.enseignantsService.triggerUpdate();
         this.chargerDonner();

@@ -50,7 +50,6 @@ export class AjoutModifierFiliereComponent implements OnInit {
             this.filiereService.triggerUpdate();
             this._dialogRef.close(true);
             Swal.fire('Merci !...', 'filiere enregistré avec succès!', 'success');
-            this.filiereService.triggerUpdate();
           },
           (error) => {
             console.error('Erreur lors de l\'ajout de filiere:', error);

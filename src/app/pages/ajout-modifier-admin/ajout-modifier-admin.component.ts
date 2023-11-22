@@ -46,6 +46,7 @@ export class AjoutModifierAdminComponent implements OnInit {
             this.adminForm.reset();
             this.authService.setAdminConnect(this.data);
             this._dialogRef.close(true);
+            this.authService.triggerUpdate();
           
             Swal.fire('Merci !...', 'Admin modifié avec succès!', 'success');
           },
@@ -64,6 +65,7 @@ export class AjoutModifierAdminComponent implements OnInit {
             this._dialogRef.close(true);
             Swal.fire('Merci !...', 'Admin enregistré avec succès!', 'success');
             this.adminService.triggerUpdate();
+            this.authService.triggerUpdate();
           },
           (error) => {
             console.error('Erreur lors de l\'ajout de l\'administrateur:', error);

@@ -42,9 +42,10 @@ export class EtudiantService {
   // deleteAdmin(adminData: any) {
   //   return this.http.delete(this.baseUrl+'supprimer', { body: adminData });
   // }
-  deleteEtudiant(idEtudiant: number) {
-    return this.http.delete("http://localhost:8080/etudiant/supprimer");
-  }
+  
 
+  deleteEtudiant(adminData: any) {
+    return this.http.delete("http://localhost:8080/etudiant/supprimer", { body: adminData, responseType: 'text' });
+  }
 
 }

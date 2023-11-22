@@ -39,6 +39,7 @@ export class ModifierfiliereComponent implements OnInit {
           (response) => {
             this.filiereForm.reset();
             this._dialogRef.close(true);
+            this.filiereService.triggerUpdate();
             Swal.fire('Merci !...', 'Filiere modifier avec succes', 'success');
             
           },
@@ -46,6 +47,7 @@ export class ModifierfiliereComponent implements OnInit {
             Swal.fire('Erreur !...', error.error.message, 'error');
           }
         );
+        this.filiereService.triggerUpdate();
         // this._dialogRef.close(true);
         
       } 

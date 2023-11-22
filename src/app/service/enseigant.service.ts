@@ -30,10 +30,9 @@ export class EnseigantService {
     return this.http.put(`${this.baseUrl}changeAccess/${idEnseignant}`, {});
   }
   
-  // deleteAdmin(adminData: any) {
-  //   return this.http.delete(this.baseUrl+'supprimer', { body: adminData });
-  // }
-  deleteEnseignant(idEnseigant: number) {
-    return this.http.delete("http://localhost:8080/enseignant/delete");
+
+ 
+  deleteEnseignant(adminData: any) {
+    return this.http.delete("http://localhost:8080/enseignant/supprimer", { body: adminData, responseType: 'text' });
   }
 }

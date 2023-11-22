@@ -28,4 +28,6 @@ import {MatSelectModule} from '@angular/material/select';
   ]
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule {
+  
+}

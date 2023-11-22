@@ -11,7 +11,7 @@ export class NiveauService {
     throw new Error('Method not implemented.');
   }
   
-  updateEvent = new Subject<void>();
+  private updateEvent = new Subject<void>();
 
   update$ = this.updateEvent.asObservable();
  

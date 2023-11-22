@@ -41,6 +41,8 @@ export class ModifierclasseComponent implements OnInit {
           (response) => {
             this.classeForm.reset();
             this._dialogRef.close(true);
+            this.classeService.triggerUpdate();
+
             Swal.fire('Merci !...', 'classe modifier avec succes', 'success');
             
           },
@@ -48,6 +50,8 @@ export class ModifierclasseComponent implements OnInit {
             Swal.fire('Erreur !...', error.error.message, 'error');
           }
         );
+        this.classeService.triggerUpdate();
+
         // this._dialogRef.close(true);
         
       } 

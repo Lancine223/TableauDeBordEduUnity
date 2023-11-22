@@ -34,6 +34,7 @@ export class ConnexionComponent implements OnInit {
           // Gérer la connexion réussie ici
           this.autService.triggerUpdate()
           this.router.navigate(['/tableaudebord']);
+          
         },
         (error) => {
 

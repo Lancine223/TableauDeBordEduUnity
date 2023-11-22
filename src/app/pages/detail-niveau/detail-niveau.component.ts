@@ -21,15 +21,24 @@ export class DetailNiveauComponent implements OnInit {
     private niveauService: NiveauService,
      private route: ActivatedRoute,
      private router: Router,
-     private filiereService: FiliereService ) { }
+     private filiereService: FiliereService ) { 
+      this.chargeniveau();
+     }
 
   ngOnInit() {
+
+    this.filiereService.update$.subscribe(() => {
+      this.chargeniveau();
+    });
+    
+  }
+
+  chargeniveau(){
     this.route.paramMap.subscribe(params => {
       const id = +params.get('id'); // Convertir l'ID en nombre
       this.niveauService.getNiveauById(id).subscribe(niveau => this.niveau = niveau);
       this.loadFilieres(id);
     });
-    
   }
 
   onDelete(data: any){
@@ -45,22 +54,18 @@ export class DetailNiveauComponent implements OnInit {
         this.filiereService.triggerUpdate();
         
         this.filiereService.supprimerFiliere(data).subscribe();
+        // this.niveauService.triggerUpdate();
         this.filiereService.triggerUpdate();
-        this.route.paramMap.subscribe(params => {
-          const id = +params.get('id'); // Convertir l'ID en nombre
-          this.niveauService.getNiveauById(id).subscribe(niveau => this.niveau = niveau);
-          this.loadFilieres(id);
-        });
+        // this.route.paramMap.subscribe(params => {
+        //   const id = +params.get('id'); // Convertir l'ID en nombre
+        //   this.niveauService.getNiveauById(id).subscribe(niveau => this.niveau = niveau);
+        //   this.loadFilieres(id);
+        // });
         Swal.fire(
           'Supprimer!',
           'cette filiere a été supprimer.',
           'success'
         )
-        this.route.paramMap.subscribe(params => {
-          const id = +params.get('id'); // Convertir l'ID en nombre
-          this.niveauService.getNiveauById(id).subscribe(niveau => this.niveau = niveau);
-          this.loadFilieres(id);
-        });
         this.filiereService.triggerUpdate();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

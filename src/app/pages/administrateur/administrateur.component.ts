@@ -26,6 +26,7 @@ export class AdministrateurComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor( private adminService: AdministrateurService,private _dialog: MatDialog, private authService: AuthentificationService) {
     this.adminConnecter = this.authService.getAdminConnect();
+    this.loadAdminList();
     this.dataSource = new MatTableDataSource(this.admins);
    }
 
@@ -35,12 +36,14 @@ export class AdministrateurComponent implements OnInit {
   }
 
   ngOnInit(){
-   this.loadAdminList();
+   
+   this.adminService.update$.subscribe(() => {
+    this.loadAdminList();
+  });
   }
 
 // Exemple pour charger la liste des administrateurs
 loadAdminList(): void {
-  this.adminService.triggerUpdate();
   this.adminService.getAdminList().subscribe(
     (data) => {
       this.admins = data;
@@ -48,10 +51,6 @@ loadAdminList(): void {
       this.dataSource = new MatTableDataSource(this.admins);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.adminService.update$.subscribe(() => {
-        // Mettez à jour vos données ici
-        this.refreshData();
-    });
     },
     (error) => {
       console.error('Erreur lors du chargement de la liste des administrateurs:', error);
@@ -59,15 +58,15 @@ loadAdminList(): void {
   );
 }
 
-   refreshData() {
-    // Mettez à jour vos données (par exemple, récupérez à nouveau les mesures)
-    // Appel de la méthode du service pour récupérer les mesures
-    this.adminService.triggerUpdate();
-    this.admins = this.adminService.getAdminList();
-    this.dataSource = new MatTableDataSource(this.admins);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  //  refreshData() {
+  //   // Mettez à jour vos données (par exemple, récupérez à nouveau les mesures)
+  //   // Appel de la méthode du service pour récupérer les mesures
+  //   this.adminService.triggerUpdate();
+  //   this.admins = this.adminService.getAdminList();
+  //   this.dataSource = new MatTableDataSource(this.admins);
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
  
 
    applyFilter(event: Event) {
@@ -99,14 +98,13 @@ loadAdminList(): void {
     }).then((result) => {
       if (result.value) {
         
-        this.adminService.triggerUpdate();
         this.adminService.deleteAdmin(data).subscribe(
           (response) => {
             console.log('Admin supprimé avec succès:', response);
             // Additional logic if needed
             this.adminService.triggerUpdate();
-            this.dataSource = new MatTableDataSource(this.admins);
-            this.loadAdminList();
+            // this.dataSource = new MatTableDataSource(this.admins);
+            // this.loadAdminList();
             Swal.fire(
               'Supprimer!',
               'Cette admin a été supprimer.',

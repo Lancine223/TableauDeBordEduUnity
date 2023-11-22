@@ -36,26 +36,34 @@ export class AjoutModifierNiveauComponent implements OnInit {
       const data = this.niveauForm.value;
       if (this.data) {
         // Update
+        this.niveauService.triggerUpdate();
+
         this.niveauService.modifyNiveau(data).subscribe(
           (response) => {
             this.niveauForm.reset();
             this._dialogRef.close(true);
-            
+            this.niveauService.triggerUpdate();
           },
           (error) => {
             Swal.fire('Erreur !...', error.error.message, 'error');
           }
         );
+        this.niveauService.triggerUpdate();
+
         // this._dialogRef.close(true);
+       
         
       } else {
         // Create
+        this.niveauService.triggerUpdate();
+
         
         this.niveauService.addNiveau(data).subscribe(
           (response) => {
             
             this.niveauForm.reset();
             this._dialogRef.close(true);
+            this.niveauService.triggerUpdate();
             
             // Swal.fire('Merci !...', 'Niveau enregistré avec succès!', 'success');
           },
@@ -63,6 +71,8 @@ export class AjoutModifierNiveauComponent implements OnInit {
             Swal.fire('attention !...', error.error.message, 'error');
           }
         );
+        this.niveauService.triggerUpdate();
+
         
       }
 

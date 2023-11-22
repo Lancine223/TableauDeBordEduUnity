@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Admin } from 'app/model/admin';
+
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -13,7 +15,7 @@ export class AuthentificationService {
   
   private admin1 : Admin|undefined;
   public isAuth : boolean = false;
-  constructor() { }
+  constructor(private route:Router) { }
 
   private updateEvent = new Subject<void>();
 
@@ -31,8 +33,14 @@ export class AuthentificationService {
     return this.admin1;
   }
   deconnecter(){
+    console.log("je suis dans deconnecter");
+
     this.admin1=null;
     this.isAuth = false;
+    localStorage.clear();
+    this.route.navigate(['/login']);
+    console.log("sortie deconnecter",localStorage.getItem("idAdministrateur"));
+
   }
   
 

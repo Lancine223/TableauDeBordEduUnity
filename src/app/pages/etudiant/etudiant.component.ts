@@ -31,7 +31,8 @@ export class EtudiantComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor( private etudiantsService: EtudiantService, private _dialog: MatDialog, private authService: AuthentificationService) {
     // this.adminConnecter = this.authService.getAdminConnect();
-  
+    this.chargerDonner();
+    this.loadAbonnements();
    
     
    }
@@ -42,24 +43,11 @@ export class EtudiantComponent implements OnInit {
   }
 
   ngOnInit(){
-  this.etudiantsService.getEtudiantList().subscribe(
-    (data) => {
-      // this.etudiants = data.filter(enseignant => enseignant.acces === false);
-      this.etudiants = data;
-      console.log("etudiants :", this.etudiants.length);
-      this.dataSource = new MatTableDataSource(this.etudiants);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    },
-    (error) => {
-      console.error('Erreur lors du chargement de la liste des etudiants:', error);
-    }
-  );
-
-  this.etudiantsService.getEtudiantList().subscribe((etudiants) => {
-    this.etudiants = etudiants;
-    this.loadAbonnements();
-  });
+    this.etudiantsService.update$.subscribe(() => {
+      this.chargerDonner();
+      this.loadAbonnements();
+    });
+ 
 
   }
 
@@ -105,24 +93,6 @@ export class EtudiantComponent implements OnInit {
   }
   
 
-// Exemple pour charger la liste des administrateurs
-// loadEnseignantList(): void {
-//   this.enseignantsService.getEnseignantList().subscribe(
-//     (data) => {
-//       this.enseignants = data;
-//       this.dataSource = new MatTableDataSource(this.enseignants);
-//       this.dataSource.paginator = this.paginator;
-//       this.dataSource.sort = this.sort;
-//       this.enseignantsService.update$.subscribe(() => {
-//         // Mettez à jour vos données ici
-//         this.refreshData();
-//     });
-//     },
-//     (error) => {
-//       console.error('Erreur lors du chargement de la liste des enseigants:', error);
-//     }
-//   );
-// }
 
    applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -141,7 +111,7 @@ export class EtudiantComponent implements OnInit {
   onDelete(data: any){
     Swal.fire({
       title: 'Êtes-vous sûr de vouloir supprimer?',
-      text: 'Vous ne pourriez plus récupérer cette etudiant!',
+      text: 'Vous ne pourriez plus récupérer cet etudiant!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Oui, supprimez-le !',
@@ -149,16 +119,23 @@ export class EtudiantComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         
-        this.etudiantsService.deleteEtudiant(data).subscribe();
-        this.etudiantsService.triggerUpdate();
-        this.chargerDonner();
-        Swal.fire(
-          'Supprimer!',
-          'Cette etudiant a été supprimer.',
-          'success'
-        )
-        this.etudiantsService.triggerUpdate();
-        this.chargerDonner();
+        this.etudiantsService.deleteEtudiant(data).subscribe(
+          (response) => {
+            console.log('etudiant supprimé avec succès:', response);
+            // Additional logic if needed
+            this.etudiantsService.triggerUpdate();
+            // this.dataSource = new MatTableDataSource(this.admins);
+            // this.loadAdminList();
+            Swal.fire(
+              'Supprimer!',
+              'Cet etudiant a été supprimer.',
+              'success'
+            )
+          },
+          (error) => {
+            console.error('Erreur lors de la suppression de l\'etudiant:', error);
+          }
+        );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Annuler',
@@ -168,5 +145,4 @@ export class EtudiantComponent implements OnInit {
       }
     })
   }
-
 }

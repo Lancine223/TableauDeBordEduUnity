@@ -22,15 +22,25 @@ export class DetailFiliereComponent implements OnInit {
     private classeService: ClasseService,
      private route: ActivatedRoute,
      private router: Router,
-     private filiereService: FiliereService ) { }
+     private filiereService: FiliereService ) { 
+      this.chargefiliere();
+     }
 
   ngOnInit() {
+    
+
+    this.classeService.update$.subscribe(() => {
+      this.chargefiliere();
+    });
+    
+  }
+
+  chargefiliere(){
     this.route.paramMap.subscribe(params => {
       const id = +params.get('id'); // Convertir l'ID en nombre
       this.filiereService.getOneFiliere(id).subscribe(filiere => this.filiere = filiere);
       this.loadClasses(id);
     });
-    
   }
 
   onDelete(data: any){
@@ -44,28 +54,15 @@ export class DetailFiliereComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.classeService.triggerUpdate();
-        this.route.paramMap.subscribe(params => {
-          const id = +params.get('id'); // Convertir l'ID en nombre
-          this.filiereService.getOneFiliere(id).subscribe(filiere => this.filiere = filiere);
-          this.loadClasses(id);
-        });
+        
         this.classeService.supprimerClasse(data).subscribe();
         this.classeService.triggerUpdate();
-        this.route.paramMap.subscribe(params => {
-          const id = +params.get('id'); // Convertir l'ID en nombre
-          this.filiereService.getOneFiliere(id).subscribe(filiere => this.filiere = filiere);
-          this.loadClasses(id);
-        });
+       
         Swal.fire(
           'Supprimer!',
           'cette classe a été supprimer.',
           'success'
         )
-        this.route.paramMap.subscribe(params => {
-          const id = +params.get('id'); // Convertir l'ID en nombre
-          this.filiereService.getOneFiliere(id).subscribe(filiere => this.filiere = filiere);
-          this.loadClasses(id);
-        });
         this.classeService.triggerUpdate();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

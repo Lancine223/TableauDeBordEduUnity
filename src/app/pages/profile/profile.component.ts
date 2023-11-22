@@ -17,8 +17,9 @@ adminConnecter: Admin|undefined ;
    }
 
   ngOnInit(): void {
-    this.authService.triggerUpdate();
-this.adminConnecter;
+this.authService.update$.subscribe(() => {
+  this.adminConnecter = this.authService.getAdminConnect();
+});
 
   }
 

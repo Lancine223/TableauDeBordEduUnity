@@ -44,18 +44,20 @@ export class TableauDeBordComponent implements OnInit {
       this.loadEtudiantList();
       this.totalAbonner();
       this.sommetotalAbonne();
+      this.loadNiveauList();
     }
     
   ngOnInit() {
-    this.loadNiveauList();
+    console.log("id====",localStorage.getItem("idAdministrateur"));
     this.loadEnseignantList();
     this.counten();
     this.loadEtudiantList();
     this.totalAbonner();
     this.sommetotalAbonne();
-    this.niveauService.updateEvent.subscribe((result) => {
+
+    this.niveauService.update$.subscribe(() => {
       this.loadNiveauList();
-    })
+    });
   }
 
   detailNiveau(id: number) {
@@ -69,11 +71,6 @@ loadNiveauList(): void {
     (data) => {
       this.nives = data;
       this.datasource = this.nives;
-     
-      this.niveauService.update$.subscribe(() => {
-        // Mettez à jour vos données ici
-        this.refreshData();
-    });
     },
     (error) => {
       console.error('Erreur lors du chargement de la liste des administrateurs:', error);
@@ -91,8 +88,7 @@ onDelete(data: any){
     cancelButtonText: 'Non, garde-le'
   }).then((result) => {
     if (result.value) {
-      this.niveauService.triggerUpdate();
-      this.loadNiveauList();
+      // this.loadNiveauList();
       this.niveauService.deleteNiveau(data).subscribe();
       this.niveauService.triggerUpdate();
       this.loadNiveauList();

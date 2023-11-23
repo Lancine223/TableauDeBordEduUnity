@@ -97,11 +97,7 @@ export class AlertEnseignantComponent implements OnInit {
         
         this.enseignantsService.deleteEnseignant(data).subscribe(
           (response) => {
-            console.log('enseignant supprimé avec succès:', response);
-            // Additional logic if needed
             this.enseignantsService.triggerUpdate();
-            // this.dataSource = new MatTableDataSource(this.admins);
-            // this.loadAdminList();
             Swal.fire(
               'Supprimer!',
               'Cet enseignant a été supprimer.',
@@ -132,8 +128,6 @@ onActivate(idEnseigant: number){
       cancelButtonText: 'Non, garde-le'
     }).then((result) => {
       if (result.value) {
-        // this.enseignantsService.triggerUpdate();
-        // this.chargerDonner();
         this.enseignantsService.changeAccess(idEnseigant).subscribe();
         this.enseignantsService.triggerUpdate();
         this.chargerDonner();

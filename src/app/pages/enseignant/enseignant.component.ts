@@ -125,18 +125,15 @@ export class EnseignantComponent implements OnInit {
     cancelButtonText: 'Non, garde-le'
     }).then((result) => {
       if (result.value) {
-        // this.enseignantsService.triggerUpdate();
-        // this.chargerDonner();
+  
         this.enseignantsService.changeAccess(idEnseigant).subscribe();
         this.enseignantsService.triggerUpdate();
-        // this.chargerDonner();
         Swal.fire(
           'Desactivation!',
        'Cet enseignant a été desactiver.',
        'success'
      )
         this.enseignantsService.triggerUpdate();
-        // this.chargerDonner();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Annuler',

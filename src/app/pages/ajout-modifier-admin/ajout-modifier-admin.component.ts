@@ -42,9 +42,8 @@ export class AjoutModifierAdminComponent implements OnInit {
         // Update
         this.adminService.modifyAdmin(data).subscribe(
           (response) => {
-            console.log('Admin modifié avec succès:', response);
             this.adminForm.reset();
-            this.authService.setAdminConnect(this.data);
+            this.authService.setAdminConnect(data);
             this._dialogRef.close(true);
             this.authService.triggerUpdate();
           

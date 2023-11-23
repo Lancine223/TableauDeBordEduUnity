@@ -26,7 +26,7 @@ export class AdminLayoutComponent implements OnInit {
     , 
     private router: Router) {
     this.admConnect = this.authService.getAdminConnect();
-    this.idAdministrateurlocal= localStorage.getItem("idAdministrateur");
+    // this.idAdministrateurlocal= localStorage.getItem("idAdministrateur");
   }
 
   
@@ -34,11 +34,12 @@ export class AdminLayoutComponent implements OnInit {
   ngOnInit() {
 
     this.authService.update$.subscribe(() => {
-        if(localStorage.getItem("idAdministrateur")!=null){
-            this.idAdministrateurlocal=(localStorage.getItem("idAdministrateur"));
-        }else{
-            this.idAdministrateurlocal=0;
-        }
+        this.admConnect = this.authService.getAdminConnect();
+        // if(localStorage.getItem("idAdministrateur")!=null){
+        //     this.idAdministrateurlocal=(localStorage.getItem("idAdministrateur"));
+        // }else{
+        //     this.idAdministrateurlocal=0;
+        // }
       });
     
     

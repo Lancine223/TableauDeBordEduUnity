@@ -4,6 +4,8 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { Router } from '@angular/router';
 import { Enseignant } from 'app/model/enseignant';
 import { EnseigantService } from 'app/service/enseigant.service';
+import { AuthentificationService } from 'app/service/authentification.service';
+import { Admin } from 'app/model/admin';
 
 @Component({
   selector: 'app-navbar',
@@ -18,10 +20,13 @@ export class NavbarComponent implements OnInit {
     private sidebarVisible: boolean;
     listeEnseignants: Enseignant[]| any;
   nbrEnseignant: number;
+  adminConnecter: Admin|undefined;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router, private enseignantService: EnseigantService) {
+    constructor(location: Location,private authService: AuthentificationService , private element: ElementRef, private router: Router, private enseignantService: EnseigantService) {
       this.location = location;
           this.sidebarVisible = false;
+          this.loadEnseignantList();
+          this.adminConnecter = this.authService.getAdminConnect();
     }
 
     ngOnInit(){
@@ -36,9 +41,14 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
-     this.enseignantService.triggerUpdate();
-     this.loadEnseignantList();
-    this.counten();
+
+     this.authService.update$.subscribe(() => {
+      this.adminConnecter = this.authService.getAdminConnect();
+    });
+
+     this.enseignantService.update$.subscribe(() => {
+      this.loadEnseignantList();
+    });
 }
 
     sidebarOpen() {

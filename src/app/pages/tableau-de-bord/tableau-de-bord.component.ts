@@ -39,7 +39,7 @@ export class TableauDeBordComponent implements OnInit {
        private etudiantService: EtudiantService,
        private abonnementService: AbonnementService,
     ) { 
-      this.AdminConnecter = this.authService.getAdminConnect();
+      this.AdminConnecter = JSON.parse(localStorage.getItem('enseignant'));
       // console.log("Niveau Connecter est :", this.AdminConnecter);
       this.loadEtudiantList();
       this.totalAbonner();
@@ -48,12 +48,16 @@ export class TableauDeBordComponent implements OnInit {
     }
     
   ngOnInit() {
-    console.log("id====",localStorage.getItem("idAdministrateur"));
     this.loadEnseignantList();
     this.counten();
     this.loadEtudiantList();
     this.totalAbonner();
     this.sommetotalAbonne();
+
+    this.authService.update$.subscribe(() => {
+      this.AdminConnecter = JSON.parse(localStorage.getItem('enseignant'));
+
+    });
 
     this.niveauService.update$.subscribe(() => {
       this.loadNiveauList();

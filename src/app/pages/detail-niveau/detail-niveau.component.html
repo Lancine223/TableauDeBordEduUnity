@@ -1,6 +1,6 @@
 <div class="main-content">
     <div class="container-fluid">
-
+        <div [routerLink]="['/tableaudebord']" style="margin-bottom: 10px;"><i style="font-size: large;" class="fas fa-reply"></i></div>
 <a style="background: #725787;" (click)="OpenDialogAdd( niveau, '600ms', '600ms')"  class="btn btn-round"><i class="fas fa-plus" style="color: white;"></i> Ajouter</a> Les filières disponible en {{ niveau.nom }}
     <div class="row">
             <div class="col-lg-6 col-md-12" *ngFor="let filiere of filieres">

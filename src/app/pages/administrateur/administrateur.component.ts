@@ -25,7 +25,7 @@ export class AdministrateurComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor( private adminService: AdministrateurService,private _dialog: MatDialog, private authService: AuthentificationService) {
-    this.adminConnecter = this.authService.getAdminConnect();
+    this.adminConnecter = JSON.parse(localStorage.getItem('enseignant'));
     this.loadAdminList();
     this.dataSource = new MatTableDataSource(this.admins);
    }
@@ -36,6 +36,10 @@ export class AdministrateurComponent implements OnInit {
   }
 
   ngOnInit(){
+    this.authService.update$.subscribe(()=>{
+    this.adminConnecter = JSON.parse(localStorage.getItem('enseignant'));
+
+    });
    
    this.adminService.update$.subscribe(() => {
     this.loadAdminList();

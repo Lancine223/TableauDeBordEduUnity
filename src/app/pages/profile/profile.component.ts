@@ -13,12 +13,12 @@ import { AjoutModifierAdminComponent } from '../ajout-modifier-admin/ajout-modif
 export class ProfileComponent implements OnInit {
 adminConnecter: Admin|undefined ;
   constructor(private authService: AuthentificationService, private adminService: AdministrateurService,private _dialog: MatDialog,) {
-    this.adminConnecter = authService.getAdminConnect();
+    this.adminConnecter = JSON.parse(localStorage.getItem('enseignant'));
    }
 
   ngOnInit(): void {
 this.authService.update$.subscribe(() => {
-  this.adminConnecter = this.authService.getAdminConnect();
+  this.adminConnecter = JSON.parse(localStorage.getItem('enseignant'));
 });
 
   }

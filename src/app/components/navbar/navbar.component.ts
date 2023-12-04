@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
       this.location = location;
           this.sidebarVisible = false;
           this.loadEnseignantList();
-          this.adminConnecter = this.authService.getAdminConnect();
+          this.adminConnecter =     this.adminConnecter = JSON.parse(localStorage.getItem('enseignant'));
     }
 
     ngOnInit(){
@@ -43,7 +43,8 @@ export class NavbarComponent implements OnInit {
      });
 
      this.authService.update$.subscribe(() => {
-      this.adminConnecter = this.authService.getAdminConnect();
+      this.adminConnecter =  this.adminConnecter = JSON.parse(localStorage.getItem('enseignant'));
+
     });
 
      this.enseignantService.update$.subscribe(() => {

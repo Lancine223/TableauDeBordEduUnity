@@ -11,10 +11,15 @@ export class AbonnementComponent implements OnInit {
   abonnements: any[] = [];
   constructor(
     private abonService: AbonnementService,
-  ) { }
+  ) { 
+    this.loadNiveauList();
+  }
 
   ngOnInit(): void {
-    this.loadNiveauList();
+    
+    this.abonService.update$.subscribe(()=>{
+      this.loadNiveauList();
+    })
   }
 
   loadNiveauList(): void {
@@ -43,17 +48,14 @@ export class AbonnementComponent implements OnInit {
       if (result.value) {
 
         this.abonService.triggerUpdate();
-        this.loadNiveauList();
         this.abonService.supprimerAbonnement(data).subscribe();
         this.abonService.triggerUpdate();
-        this.loadNiveauList();
         Swal.fire(
           'Supprimer!',
           'Cet abonnement a été supprimer.',
           'success'
         )
         this.abonService.triggerUpdate();
-        this.loadNiveauList();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Annuler',

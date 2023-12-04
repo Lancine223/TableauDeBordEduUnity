@@ -47,7 +47,7 @@ export class EtudiantComponent implements OnInit {
       this.chargerDonner();
       this.loadAbonnements();
     });
- 
+
 
   }
 
@@ -131,6 +131,7 @@ export class EtudiantComponent implements OnInit {
               'Cet etudiant a été supprimer.',
               'success'
             )
+            this.etudiantsService.triggerUpdate();
           },
           (error) => {
             console.error('Erreur lors de la suppression de l\'etudiant:', error);

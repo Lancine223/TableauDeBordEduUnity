@@ -19,13 +19,12 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
   admConnect: Admin;
-  idAdministrateurlocal:any;
   
   constructor( public location: Location,
     private authService: AuthentificationService
     , 
     private router: Router) {
-    this.admConnect = this.authService.getAdminConnect();
+    this.admConnect = JSON.parse(localStorage.getItem('enseignant'));
     // this.idAdministrateurlocal= localStorage.getItem("idAdministrateur");
   }
 
@@ -34,7 +33,7 @@ export class AdminLayoutComponent implements OnInit {
   ngOnInit() {
 
     this.authService.update$.subscribe(() => {
-        this.admConnect = this.authService.getAdminConnect();
+        this.admConnect = JSON.parse(localStorage.getItem('enseignant'));
         // if(localStorage.getItem("idAdministrateur")!=null){
         //     this.idAdministrateurlocal=(localStorage.getItem("idAdministrateur"));
         // }else{
@@ -43,13 +42,13 @@ export class AdminLayoutComponent implements OnInit {
       });
     
     
-    if(localStorage.getItem("idAdministrateur")!=null){
-        console.log("on est ds admin==========",localStorage.getItem("idAdministrateur"));
-        this.idAdministrateurlocal=(localStorage.getItem("idAdministrateur"));
-    }else{
-        console.log("on est ds admin==PAS USER========",localStorage.getItem("idAdministrateur"));
-        this.idAdministrateurlocal=0;
-    }
+    // if(localStorage.getItem("idAdministrateur")!=null){
+    //     console.log("on est ds admin==========",localStorage.getItem("idAdministrateur"));
+    //     this.idAdministrateurlocal=(localStorage.getItem("idAdministrateur"));
+    // }else{
+    //     console.log("on est ds admin==PAS USER========",localStorage.getItem("idAdministrateur"));
+    //     this.idAdministrateurlocal=0;
+    // }
     
     
     // this.statusAdmin = this.authService.getAdminConnect();

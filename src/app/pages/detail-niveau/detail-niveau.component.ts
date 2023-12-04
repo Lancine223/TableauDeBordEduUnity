@@ -38,6 +38,7 @@ export class DetailNiveauComponent implements OnInit {
       const id = +params.get('id'); // Convertir l'ID en nombre
       this.niveauService.getNiveauById(id).subscribe(niveau => this.niveau = niveau);
       this.loadFilieres(id);
+      
     });
   }
 

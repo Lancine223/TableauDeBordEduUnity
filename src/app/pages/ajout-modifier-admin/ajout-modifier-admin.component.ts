@@ -43,7 +43,7 @@ export class AjoutModifierAdminComponent implements OnInit {
         this.adminService.modifyAdmin(data).subscribe(
           (response) => {
             this.adminForm.reset();
-            this.authService.setAdminConnect(data);
+            localStorage.setItem('enseignant', JSON.stringify(response));
             this._dialogRef.close(true);
             this.authService.triggerUpdate();
           
@@ -59,7 +59,6 @@ export class AjoutModifierAdminComponent implements OnInit {
        
         this.adminService.addAdmin(data).subscribe(
           (response) => {
-            console.log('Admin enregistré avec succès:', response);
             this.adminForm.reset();
             this._dialogRef.close(true);
             Swal.fire('Merci !...', 'Admin enregistré avec succès!', 'success');
@@ -68,6 +67,8 @@ export class AjoutModifierAdminComponent implements OnInit {
           },
           (error) => {
             console.error('Erreur lors de l\'ajout de l\'administrateur:', error);
+            Swal.fire('Merci !...', error.error.message , 'success');
+
           }
         );
       

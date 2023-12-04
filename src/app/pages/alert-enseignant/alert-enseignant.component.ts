@@ -103,11 +103,13 @@ export class AlertEnseignantComponent implements OnInit {
               'Cet enseignant a été supprimer.',
               'success'
             )
+            this.enseignantsService.triggerUpdate();
           },
           (error) => {
             console.error('Erreur lors de la suppression de l\'enseignant:', error);
           }
         );
+        this.enseignantsService.triggerUpdate();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Annuler',

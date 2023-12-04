@@ -28,10 +28,8 @@ export class ConnexionComponent implements OnInit {
       const { email, motDePasse } = this.loginForm.value;
       this.adminService.loginAdmin(email, motDePasse).subscribe(
         (response: any) => {
-          const IdAdmincon = response.idAdministrateur;
-          localStorage.setItem('idAdministrateur', IdAdmincon);
-          this.autService.setAdminConnect(response);
-          // Gérer la connexion réussie ici
+          // const IdAdmincon = response.idAdministrateur;
+          localStorage.setItem('enseignant', JSON.stringify(response));
           this.autService.triggerUpdate()
           this.router.navigate(['/tableaudebord']);
           

@@ -1,23 +1,27 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
+
+            <div *ngIf=" abonnements.length < 1 ">
+                <h1 style="text-align: center; color:#725787 ">Aucune abonnement effectuer !</h1>
+            </div>
             
-            <div class="col-lg-6 col-md-12" *ngFor="let abonn of abonnements ">
+            <div class="col-lg-4 col-md-12" *ngFor="let abonn of abonnements ">
                 <div class="card" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;">
                     <div class="thetwo">
                         <div>
                                 <h3>Etudiant</h3>
-                                <h3 style="color: #725787">{{abonn.etudiant.prenom}} {{abonn.etudiant.nom}} </h3>
+                                <h5 style="color: #725787">{{abonn.etudiant.prenom}} {{abonn.etudiant.nom}} </h5>
                         </div>
                         <div>
                                 <h3>Enseignant</h3>
-                                <h3 style="color: #725787">{{abonn.enseignant.prenom}} {{abonn.enseignant.nom}}</h3>
+                                <h5 style="color: #725787">{{abonn.enseignant.prenom}} {{abonn.enseignant.nom}}</h5>
                         </div>
                    </div>
                    <div class="oneF">
-                    <h3> Montant : <span style="color: #725787">{{abonn.montant}}</span>  F</h3>
-                    <h3> Date : {{abonn.dateAbonnement | date:'dd-MM-yyyy'
-                    }} </h3>
+                    <h5> Montant : <span style="color: #725787">{{abonn.montant}}</span>  F</h5>
+                    <h5> Date : {{abonn.dateAbonnement | date:'dd-MM-yyyy'
+                    }} </h5>
                     <button class="btn btn-danger" (click)="onDelete(abonn)"> <i class="fas fa-trash"></i> Supprimer</button>
                    </div>
                 </div>
